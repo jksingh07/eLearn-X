@@ -91,10 +91,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # SMTP Server Settings
 # EMAIL_BACKEND = 'smtp.elasticemail.com'
 EMAIL_HOST = 'smtp.gmail.com'
-ELASTICEMAIL_API_KEY = '437590BE7C72D4C8962A960738EF8F231A89F2B1DC2EB4E27B10E836E1AE17754D3953E1691FAFD605C1246CB9F44E9D'
-ELASTICEMAIL_API_URL = 'https://api.elasticemail.com/v2/email/send'
+
+
 EMAIL_HOST_USER = 'jazzy199907@gmail.com'
-EMAIL_HOST_PASSWORD = 'hxtnemhqdjvcpqnv'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 # Default Email From Address
