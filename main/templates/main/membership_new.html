@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block profile %}
+{% if faculty  %} {% url 'profile' faculty.faculty_id %}
+{% else %} {% url 'profile' student.student_id %}
+{% endif %}
+{% endblock %}
+{% block user %}
+{% if faculty %} {{faculty.name}}
+{% else %} {{student.name}}
+{% endif %}
+{% endblock user %}
+{% block content %}
+<div class="container">
+   <!-- navigation links -->
+   <div class="container shadow-sm">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-3">
+         <li class="breadcrumb-item active animate__animated animate__backInRight" aria-current="page">Memberships/Subscription</li>
+      </ol>
+   </nav>
+</div>
+<div class="container mt-5">
+    <h1>Membership Options</h1>
+    <div class="row mt-4">
+        {% for membership in memberships %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header {% if membership.name == 'Gold' %}bg-warning{% elif membership.name == 'Silver' %}bg-secondary{% elif membership.name == 'Bronze' %}bg-dark{% endif %} text-white">
+                    <h3>{{ membership.name }}</h3>
+                    <h4>${{ membership.price }}/month</h4>
+                </div>
+                <div class="card-body">
+                    <strong>{{ membership.features }}</strong>
+                </div>
+
+                <div class="card-footer {% if membership.name == 'Gold' %}bg-warning{% elif membership.name == 'Silver' %}bg-secondary{% elif membership.name == 'Bronze' %}bg-dark{% endif %} text-white"">
+                    <div class="text-center">
+                        <a href="{% url 'membership_payment' membership.pk %}" class="btn btn-primary">Select</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+{% endblock %}

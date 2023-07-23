@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block title %} Add Course | eLMS {% endblock title %}
+{% block profile %}
+{% if faculty  %} {% url 'profile' faculty.faculty_id %}
+{% else %} {% url 'profile' student.student_id %}
+{% endif %}
+{% endblock profile %}
+{% block user %}
+{% if faculty %} {{faculty.name}}
+{% else %} {{student.name}}
+{% endif %}
+{% endblock user %}
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock allCourses %}
+{% block content %}
+<div class="container">
+   <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+         <div class="card">
+            <div class="card-header text-center text-white">
+               <h3>Add New Course</h3>
+            </div>
+            <div class="card-body">
+               <form method="post" action="{% url 'add_course' %}">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <div class="text-center mt-4">
+                     <button type="submit" class="btn btn-primary">Add Course</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

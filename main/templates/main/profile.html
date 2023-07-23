@@ -1,0 +1,67 @@
+
+{% extends 'index.html' %}
+{% block title %}{{ student.name }} | eLMS{% endblock title %}
+{% block profile %}
+    {% url 'profile' student.student_id %}
+{% endblock %}
+{% block user %}
+    {{ student.name }}
+{% endblock user %}
+{% block courses %}
+    {% url 'myCourses' %}
+{% endblock courses %}
+{% block allCourses %}
+    {% url 'courses' %}
+{% endblock %}
+{% block departments %}
+    {% url 'departments' %}
+{% endblock %}
+{% block content %}
+{% if messages %}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+   {% for message in messages %}
+   {{ message }}
+   {% endfor %}
+   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<!-- Profile Info Card -->
+<div class="container mt-4">
+   <div class="card shadow">
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-8">
+               <h5 class="card-title fw-bold display-4">{{ student.name }}</h5>
+               <p class="card-text fs-5">ID: {{ student.student_id }}</p>
+               <p class="card-text fs-5">Department: {{ student.department }}</p>
+               <p class="card-text fs-5">Membership:
+                  <span class="badge {% if student.membership == 'g' %}bg-warning text-white{% elif student.membership == 's' %}bg-secondary text-white{% elif student.membership == 'b' %}bg-dark text-white{% endif %}">
+                  {% if student.membership == 'g' %}
+                     Gold
+                  {% elif student.membership == 's' %}
+                     Silver
+                  {% elif student.membership == 'b' %}
+                     Bronze
+                  {% endif %}
+                  </span>
+               </p>
+            </div>
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+               <img src="/media/{{ student.photo }}" alt="Profile Picture" class="rounded-circle" style="height: 10rem; width: 10rem">
+            </div>
+         </div>
+      </div>
+      <div class="card-footer d-flex justify-content-center">
+         <a href="{% url 'changePasswordPrompt'  %}" class="btn btn-primary mx-2">Change Password</a>
+         <a href="{% url 'changePhotoPrompt'  %}" class="btn btn-primary mx-2">Change Profile Picture</a>
+      </div>
+   </div>
+</div>
+<!-- End Profile Info Card -->
+
+<script>
+   setTimeout(function() {
+      $('.alert').alert('close');
+   }, 3000);
+</script>
+{% endblock %}

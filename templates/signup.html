@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Sign Up | eLearn-X</title>
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icon/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icon/favicon-16x16.png' %}">
+      <link rel="manifest" href="{% static 'images/icon/site.webmanifest' %}">
+      <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+      <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+      <link rel="stylesheet" href="{% static 'styles/style-login.css' %}">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+   </head>
+   <body>
+      <div class="main">
+         <section class="sign-in">
+            <div class="container">
+               <div class="signin-content">
+                  <div class="signin-image">
+                     <figure><img src="{% static 'images/login.jpg' %}" alt="sign up image" class="rounded-circle img-fluid"></figure>
+                  </div>
+                  <div class="signin-form">
+                     <h1 class="form-title">eLearn-X</h1>
+                     <h2 class="form-title">Sign Up</h2>
+                     <form method="POST" class="register-form" action="{% url 'signup' %}">
+                           {% csrf_token %}
+                            <div class="form-group">
+                              <label for="{{ form.user_id.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">numbers</span></label>
+                              {{ form.user_id }}
+                           </div>
+                           <div class="form-group">
+                              <label for="{{ form.name.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">person</span></label>
+                              {{ form.name }}
+                           </div>
+                           <div class="form-group">
+                              <label for="{{ form.email.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">email</span></label>
+                              {{ form.email }}
+                           </div>
+                           <div class="form-group">
+                              <label for="{{ form.password.id_for_label }}"><span class="material-symbols-outlined" style="vertical-align:text-bottom">lock</span></label>
+                              {{ form.password }}
+                           </div>
+                           <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 100px;">
+                                            <label for="{{ form.user_type.id_for_label }}">Account Type</label>
+                                        </td>
+                                        <td>
+                                                {{ form.user_type }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 100px;">
+                                            <label for="{{ form.department.id_for_label }}">Department</label>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                {{ form.department }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 100px;">
+                                            <label for="{{ form.membership.id_for_label }}">Membership</label>
+                                        </td>
+                                        <td>
+                                                {{ form.membership }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                           <div class="d-grid">
+                              <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign Up</button>
+                           </div>
+                     </form>
+                     <div class="d-flex justify-content-around flex-wrap">
+                        <div class="">
+                           <div class="dropdown">
+                              <a class="dropdown-toggle" id="dropdownMenuButton1"
+                                 data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                              Sign in as Guest
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                 <li><a class="dropdown-item" href="/student">Student</a></li>
+                                 <li><a class="dropdown-item" href="/teacher">Teacher</a></li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="ms-3">
+                           <a href="/admin" target="_blank">Sign in as Admin</a>
+                        </div>
+                        <div class="ms-3">
+                           <a href="/login">Sign In</a>
+                        </div>
+                     </div>
+                     {% if error_messages %}
+                     <!-- Error Alert -->
+                     <div class="alert alert-danger alert-dismissible fade show my-2">
+                        {% for message in error_messages %}
+                        {{ message }}
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                     </div>
+                     {% endif %}
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      <script>
+         if (window.history.replaceState) {
+             window.history.replaceState(null, null, window.location.href);
+         }
+      </script>
+   </body>
+</html>

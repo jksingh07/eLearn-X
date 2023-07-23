@@ -1,0 +1,13 @@
+Hello {{ user.name }},
+
+Thank you for purchasing the {{ membership.name }} membership on eLearn-X platform.
+
+You now have access to the following features:
+- {% if membership.name == 'Gold' %}All Courses{% elif membership.name == 'Silver' %}Silver and Bronze level Courses{% elif membership.name == 'Bronze' %}Bronze level Courses{% endif %}
+
+If you have any questions or need assistance, feel free to contact our support team.
+
+Thank you for choosing eLearn-X!
+
+Sincerely,
+The eLearn-X Team

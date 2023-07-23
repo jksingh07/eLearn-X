@@ -1,0 +1,147 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %} {{ course.name }} | eLMS {% endblock title %}
+
+{% block profile %}
+{% url 'profile' student.student_id %}
+{% endblock profile %}
+
+{% block user %}
+{{ student.name }}
+{% endblock user %}
+
+{% block courses %}
+{% url 'myCourses' %}
+{% endblock courses %}
+
+{% block allCourses %}
+{% url 'courses' %}
+{% endblock allCourses %}
+
+{% block content %}
+<div class="container mt-4">
+   <!-- navigation links -->
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent px-0 mb-4">
+         <li class="breadcrumb-item fw-bold"><a href="{% url 'myCourses' %}" style="color: #6c757d;">My Courses</a></li>
+         <li class="breadcrumb-item fw-bold active" aria-current="page">{{ course.name }}</li>
+      </ol>
+   </nav>
+   <!-- navigation links end -->
+
+   <div class="row">
+      <div class="col-md-8">
+         <!-- course name starts -->
+         <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body py-3">
+               <h5 class="card-title mb-0 fw-bold">{{ course.department }}-{{ course.code }} : {{ course.name }}</h5>
+            </div>
+            <div class="card-footer bg-transparent d-flex align-items-center justify-content-between">
+               <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="drop" data-bs-toggle="dropdown" aria-expanded="false">
+                     Options
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="drop">
+                     <li>
+                        <a class="dropdown-item" href="{% url 'discussion' course.code %}">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots mx-2" viewBox="0 0 16 16">
+                              <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                              <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                           </svg>
+                           Discussion
+                        </a>
+                     </li>
+                     <li>
+                        <a class="dropdown-item" href="{% url 'myQuizzes' course.code %}">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text mx-2" viewBox="0 0 16 16">
+                              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                              <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                           </svg>
+                           Quiz
+                        </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <!-- course name ends -->
+
+         <!-- announcement section starts -->
+         <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-primary text-white fw-bold">
+               <img src="{% static 'images/icon/megaphone.png' %}" alt="" style="height:1.5rem;vertical-align: text-top" class="me-2">
+               Announcement
+            </div>
+            <div class="card-body">
+               {% for announcement in announcements %}
+               <!-- individual announcement starts -->
+               <div class="fs-6">{{ announcement.description | safe }}</div>
+               <div class="d-flex flex-row-reverse">
+                  <div style="color:grey;">{{ announcement.post_date }}</div>
+               </div>
+               <!-- individual announcement ends -->
+               {% empty %}
+               <p class="fs-6 text-center text-muted">No announcement has been posted</p>
+               {% endfor %}
+            </div>
+         </div>
+         <!-- announcement section ends -->
+
+         <!-- assignment section starts -->
+         <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-danger text-white fw-bold">
+               <img src="{% static 'images/icon/open-book.png' %}" alt="" style="height:1.5rem; vertical-align: text-top" class="me-2">
+               Assignment
+            </div>
+            <div class="card-body">
+               {% for assignment in assignments %}
+               <!-- individual assignment starts -->
+               <a class="fw-bold" href="{% url 'assignmentPage' course.code assignment.id %}">{{ assignment.title }}</a>
+               <div class="d-flex justify-content-between">
+                  <p style="font-size:15px"> Due Date : {{ assignment.due_date }} </p>
+                  <div style="color:grey;">{{ assignment.post_date }}</div>
+               </div>
+               <!-- individual assignment ends -->
+               {% empty %}
+               <p class="text-center text-muted fs-6">No assignments given yet</p>
+               {% endfor %}
+            </div>
+            {% if assignments %}
+            <div class="card-footer bg-transparent text-center fs-6 text-muted">
+               <span class="mt-2">Showing {{ assignments.count }} of {{ course.assignment_set.count }} {% if assignments.count == 1 %}assignment{% else %}assignments{% endif %}</span>
+               <a class="fs-6" href="{% url 'student-assignments' course.code %}">Show all</a>
+            </div>
+            {% endif %}
+         </div>
+         <!-- assignment section ends -->
+      </div>
+
+      <div class="col-md-4">
+         <!-- course material section starts -->
+         <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-warning text-white fw-bold">
+               <img src="{% static 'images/icon/folder.png' %}" alt="" style="height:1.5rem;vertical-align: text-top" class="me-2">
+               Course Material
+            </div>
+            <div class="card-body">
+               {% for material in materials %}
+               <!-- individual material starts -->
+               <p>{{ material.description | safe }}</p>
+               <div class="d-flex justify-content-between text-break">
+                  {% if material.file %}
+                  <a class="fw-bold" href="{{ material.file.url }}" style="color:#9400d3">File : {{ material.file.name }}</a><br>
+                  {% endif %}
+                  <div class="text-muted">{{ material.post_date }}</div>
+               </div>
+               <!-- individual material ends -->
+               {% empty %}
+               <p class="text-center text-muted fs-6">Course materials not available</p>
+               {% endfor %}
+            </div>
+         </div>
+         <!-- course material section ends -->
+      </div>
+   </div>
+</div>
+{% endblock %}
